@@ -16,8 +16,7 @@ workflows:
      - name: Set up code signing settings on Xcode project
        script: xcode-project use-profiles
      - name: Build App
-       script : - xcode-project build-ipa --project "sampletestgitlab.xcodeproj" --scheme "sampletestgitlab"
-     
+       script: xcode-project build-ipa --project "sampletestgitlab.xcodeproj" --scheme "sampletestgitlab"
     artifacts:
      - build/ios/ipa/*.ipa
      - /tmp/xcodebuild_logs/*.log
