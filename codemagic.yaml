@@ -6,16 +6,16 @@ workflows:
       - admin
     scripts:
      - name: Set up keychain to be used for code signing using Codemagic CLI 'keychain' command
-    script: keychain initialize
-        - name: Fetch signing files
-          script: app-store-connect fetch-signing-files "com.wibmo.sampletestgitlab" \
-              --type IOS_APP_STORE \
-              --create      
-        - name: Set up signing certificate
-          script: keychain add-certificates
-        - name: Set up code signing settings on Xcode project
-    script: xcode-project use-profiles
-    script : - xcode-project build-ipa --project "sampletestgitlab.xcodeproj" --scheme "sampletestgitlab"
+       script: keychain initialize
+     - name: Fetch signing files
+       script: app-store-connect fetch-signing-files "com.wibmo.sampletestgitlab" \
+                  --type IOS_APP_STORE \
+                  --create      
+     - name: Set up signing certificate
+       script: keychain add-certificates
+     - name: Set up code signing settings on Xcode project
+       script: xcode-project use-profiles
+       script : - xcode-project build-ipa --project "sampletestgitlab.xcodeproj" --scheme "sampletestgitlab"
      
     artifacts:
       - build/ios/ipa/*.ipa
