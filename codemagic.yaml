@@ -5,8 +5,7 @@ workflows:
       groups:
       - admin
     scripts:
-  ... your dependencies installation
-  - name: Set up keychain to be used for code signing using Codemagic CLI 'keychain' command
+     - name: Set up keychain to be used for code signing using Codemagic CLI 'keychain' command
     script: keychain initialize
         - name: Fetch signing files
           script: |
