@@ -1,0 +1,34 @@
+workflows:
+  ios-workflow:
+    name: Custom Workflow
+    environment:
+      
+      - admin
+    scripts:
+  ... your dependencies installation
+  - name: Set up keychain to be used for code signing using Codemagic CLI 'keychain' command
+    script: keychain initialize
+        - name: Fetch signing files
+          script: |
+            
+            app-store-connect fetch-signing-files "io.codemagic.app" \
+              --type IOS_APP_STORE \
+              --create      
+        - name: Set up signing certificate
+          script: keychain add-certificates
+        - name: Set up code signing settings on Xcode project
+    script: xcode-project use-profiles
+    script : - xcode-project build-ipa --project "sampletestgitlab.xcodeproj" --scheme "sampletestgitlab "
+     
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+    publishing:
+  app_store_connect: # For iOS or macOS app
+    # For authenticating with App Store Connect and uploading the IPA to App Store Connect (required)
+    api_key: $APP_STORE_CONNECT_PRIVATE_KEY # Contents of the API key saved as a secure environment variable
+    key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER # Alphanumeric value that identifies the API key, can also reference environment variable such as $APP_STORE_CONNECT_KEY_IDENTIFIER
+    issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+    
+    
